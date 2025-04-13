@@ -3,6 +3,7 @@ uvicorn
 pandas
 PyMuPDF
 sentence-transformers
-pinecone-client
+pinecone
 python-multipart
 aiofiles
+
