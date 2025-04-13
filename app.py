@@ -11,7 +11,7 @@ from pinecone import Pinecone
 # --- Config ---
 PINECONE_API_KEY = os.getenv("")
 PINECONE_ENV = os.getenv("PINECONE_ENVIRONMENT")
-INDEX_NAME = "quotefusion-main"  # CHANGE THIS
+INDEX_NAME = "chatgpt-uploads"  # CHANGE THIS
 
 # --- Initialize Pinecone and model ---
 pc = Pinecone(api_key=PINECONE_API_KEY)
