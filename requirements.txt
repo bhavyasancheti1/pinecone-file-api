@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pandas
+PyMuPDF
+sentence-transformers
+pinecone-client
+python-multipart
+aiofiles
