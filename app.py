@@ -2,20 +2,20 @@ import os
 import uuid
 import pandas as pd
 import fitz  # PyMuPDF
-import pinecone
 from io import BytesIO
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.responses import JSONResponse
 from sentence_transformers import SentenceTransformer
+from pinecone import Pinecone
 
 # --- Config ---
-PINECONE_API_KEY = os.getenv("pcsk_V4zE3_3QKPTNNcTaHE2BXHAPLFjViZsZvRRY3Vhf6hRpDRNb3cgRGpSg1conQdt2VDzSB")
-PINECONE_ENV = os.getenv("us-east-1")
+PINECONE_API_KEY = os.getenv("")
+PINECONE_ENV = os.getenv("PINECONE_ENVIRONMENT")
 INDEX_NAME = "quotefusion-main"  # CHANGE THIS
 
 # --- Initialize Pinecone and model ---
-pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
-index = pinecone.Index(INDEX_NAME)
+pc = Pinecone(api_key=PINECONE_API_KEY)
+index = pc.Index(INDEX_NAME)
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # --- FastAPI instance ---
