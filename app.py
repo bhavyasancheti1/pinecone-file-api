@@ -6,15 +6,31 @@ from io import BytesIO
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.responses import JSONResponse
 from sentence_transformers import SentenceTransformer
-from pinecone import Pinecone
+from pinecone import Pinecone, ServerlessSpec
+
+from dotenv import load_dotenv
+load_dotenv()
 
 # --- Config ---
-PINECONE_API_KEY = os.getenv("")
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 PINECONE_ENV = os.getenv("PINECONE_ENVIRONMENT")
-INDEX_NAME = "chatgpt-uploads"  # CHANGE THIS
+INDEX_NAME = "chatgpt-uploads"  # CHANGE THIS if needed
 
 # --- Initialize Pinecone and model ---
 pc = Pinecone(api_key=PINECONE_API_KEY)
+
+# Optional: auto-create index if it doesn't exist
+if INDEX_NAME not in pc.list_indexes().names():
+    pc.create_index(
+        name=INDEX_NAME,
+        dimension=384,  # SentenceTransformer('all-MiniLM-L6-v2') produces 384-dim vectors
+        metric="cosine",
+        spec=ServerlessSpec(
+            cloud="aws",
+            region="us-east-1"  # Or your Pinecone region
+        )
+    )
+
 index = pc.Index(INDEX_NAME)
 model = SentenceTransformer('all-MiniLM-L6-v2')
 

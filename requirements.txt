@@ -6,4 +6,8 @@ sentence-transformers
 pinecone
 python-multipart
 aiofiles
+tiktoken
+flask
+docx
+gunicorn
 
